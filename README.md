@@ -1,2 +1,2 @@
-# RelatedItems-API
-back-end for Related Items &amp; Comparison for Project-Atelier
+# Q&A-API
+back-end for Q&A &amp; Comparison for Project-Atelier
