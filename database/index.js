@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/qa', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // TEST database running on localhost
 const db = mongoose.connection;
@@ -41,3 +41,9 @@ const photosSchema = new Schema({
 const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
+
+// Photo.create({
+//   id: 123,
+//   answer_id: 456,
+//   url: 'url'
+// })
