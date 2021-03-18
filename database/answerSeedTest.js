@@ -13,7 +13,7 @@ const {exec} = require('child_process');
 // let stream = new LineByLineReader(path.join(__dirname, '../data/answers1.csv'));
 // const stream = LineInputStream(fs.createReadStream(path.join(__dirname, '../data/answers.csv')));
 // stream.setDelimiter("\n");
-var stream = fs.createReadStream('../data/answers1.csv');
+var stream = fs.createReadStream('../data/answers.csv');
 stream = byline.createStream(stream);
 
 mongoose.connection.on("open",function(err,conn) {

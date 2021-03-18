@@ -10,7 +10,7 @@ const {exec} = require('child_process');
 
 // allows us to read the questions.csv file
 // let stream = new LineByLineReader(path.join(__dirname, '../data/answers_photos1.csv'))
-var stream = fs.createReadStream('../data/answers_photos1.csv');
+var stream = fs.createReadStream('../data/answers_photos.csv');
 stream = byline.createStream(stream);
 
 mongoose.connection.on("open",function(err,conn) {
