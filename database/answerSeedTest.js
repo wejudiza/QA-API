@@ -72,6 +72,7 @@ mongoose.connection.on("open",function(err,conn) {
                 // maybe look at result
                 console.log('answers seed complete');
                 console.timeEnd('seed');
+                mongoose.connection.close();
             });
         }
     });

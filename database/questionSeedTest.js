@@ -65,6 +65,10 @@ mongoose.connection.on("open",function(err,conn) {
 
         counter++;
 
+        if (counter % 100000 === 0) {
+            console.log(counter);
+        }
+
         if ( counter % 1000 === 0 ) {
             stream.pause(); //lets stop reading from file until we finish writing this batch to db
 

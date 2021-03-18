@@ -65,6 +65,7 @@ mongoose.connection.on("open",function(err,conn) {
                 // maybe look at result
                 console.log('answer photo seed complete');
                 console.timeEnd('seed');
+                mongoose.connection.close();
             });
         }
     });
