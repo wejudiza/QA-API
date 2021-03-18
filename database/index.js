@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost:27017/qa', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/qatest', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // TEST database running on localhost
 const db = mongoose.connection;
@@ -10,7 +10,7 @@ db.once('open', function() {
 });
 
 const questionsSchema = new Schema({
-  id: Number /*{type: Number, index: {unique: true}}*/,
+  id: {type: Number, index: {unique: true}},
   product_id: Number,
   body: String,
   date_written: String,
@@ -44,7 +44,8 @@ const photosSchema = new Schema({
 //   answers: [],
 // })
 
-const Question = mongoose.model('Question', questionsSchema);
+const Question = mongoose.model('test', questionsSchema);
+// const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
 
