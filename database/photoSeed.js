@@ -1,4 +1,4 @@
-let {Question, Answer} = require('./index.js')
+let {Answer} = require('./index.js')
 // Does readstream for you and allow you to pause
 let LineByLineReader = require('line-by-line');
 var fs = require("fs");
@@ -8,14 +8,14 @@ var Schema = mongoose.Schema;
 const {exec} = require('child_process');
 
 // allows us to read the questions.csv file
-let stream = new LineByLineReader(path.join(__dirname, '../data/answers.csv'))
+let stream = new LineByLineReader(path.join(__dirname, '../data/answers_photos.csv'))
 
 mongoose.connection.on("open",function(err,conn) {
     console.time('seed')
 
     // lower level method, needs connection
     // allows to queue up large operations - if you don't queue up you will run out of memory
-    var bulk = Question.collection.initializeOrderedBulkOp();
+    var bulk = Answer.collection.initializeOrderedBulkOp();
     var counter = 0;
 
     stream.on("error",function(err) {
@@ -26,19 +26,13 @@ mongoose.connection.on("open",function(err,conn) {
         var row = line.split(",");     // split the lines on delimiter
         var obj = {
           id: Number(row[0]),
-          question_id: Number(row[1]),
-          body: row[2],
-          date_written: row[3],
-          answerer_name: row[4],
-          answerer_email: row[5],
-          reported: Number(row[6]),
-          helpful: Number(row[7]),
-          photos: []
+          answer_id: Number(row[1]),
+          url: row[2]
         };
         // other manipulation
 
         //*** bulk.find to find the array and then bulk.update $push
-        bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
+        bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {photos: obj}})
 
         counter++;
 

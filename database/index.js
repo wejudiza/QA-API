@@ -10,22 +10,22 @@ db.once('open', function() {
 });
 
 const questionsSchema = new Schema({
-  id: Number,
+  id: Number /*{type: Number, index: {unique: true}}*/,
   product_id: Number,
   body: String,
-  date_written: Date,
+  date_written: String,
   asker_name: String,
   asker_email: String,
   reported: Number,
-  helpful: Number
+  helpful: Number,
 });
 
 
 const answersSchema = new Schema({
-  id: Number,
+  id: {type: Number, index: {unique: true}},
   question_id: Number,
   body: String,
-  date_written: Date,
+  date_written: String,
   answerer_name: String,
   answerer_email: String,
   reported: Number,
@@ -48,9 +48,9 @@ const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
 
-Question.createCollection();
-Answer.createCollection();
-Photo.createCollection();
+// Question.createCollection();
+// Answer.createCollection();
+// Photo.createCollection();
 
 // Photo.create({
 //   id: 123,
@@ -58,4 +58,9 @@ Photo.createCollection();
 //   url: 'url'
 // })
 
-module.exports = Question
+module.exports = {
+  Question,
+  Answer,
+  Photo
+}
+// module.exports = questionsSchema;
