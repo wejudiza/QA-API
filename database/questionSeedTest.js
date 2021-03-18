@@ -43,8 +43,9 @@ mongoose.connection.on("open",function(err,conn) {
     // For line by line
     // stream.on("line",function(line) {
       stream.on("data",function(line) {
-        console.log('line', line)
-        var row = line.split(",");     // split the lines on delimiter
+
+        // var row = line.split(",");     // split the lines on delimiter
+        var row = line.toString('utf-8').split(",")
         var obj = {
           _id: Number(row[0]),
           product_id: Number(row[1]),

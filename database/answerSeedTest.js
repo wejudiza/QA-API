@@ -1,7 +1,8 @@
 let {Question, Answer} = require('./index.js')
 // Does readstream for you and allow you to pause
-let LineByLineReader = require('line-by-line');
+// let LineByLineReader = require('line-by-line');
 // let LineInputStream = require('line-input-stream');
+let byline = require('byline');
 var fs = require("fs");
 var mongoose = require("mongoose");
 var path = require('path');
@@ -9,9 +10,11 @@ var Schema = mongoose.Schema;
 const {exec} = require('child_process');
 
 // allows us to read the questions.csv file
-let stream = new LineByLineReader(path.join(__dirname, '../data/answers1.csv'));
+// let stream = new LineByLineReader(path.join(__dirname, '../data/answers1.csv'));
 // const stream = LineInputStream(fs.createReadStream(path.join(__dirname, '../data/answers.csv')));
 // stream.setDelimiter("\n");
+var stream = fs.createReadStream('../data/answers1.csv');
+stream = byline.createStream(stream);
 
 mongoose.connection.on("open",function(err,conn) {
     console.time('seed')
@@ -25,19 +28,20 @@ mongoose.connection.on("open",function(err,conn) {
         console.log(err); // or otherwise deal with it
     });
 
-    stream.on("line",function(line) {
-        var row = line.split(",");     // split the lines on delimiter
-        console.log('row', row);
+    // stream.on("line",function(line) {
+    stream.on("data",function(line) {
+        // var row = line.split(",");     // split the lines on delimiter
+        var row = line.toString('utf-8').split(",")
         var obj = {
-          _id: Number(row[0]),
-          question_id: Number(row[1]),
-          body: row[2],
-          date_written: row[3],
-          answerer_name: row[4],
-          answerer_email: row[5],
-          reported: Number(row[6]),
-          helpful: Number(row[7]),
-          photos: []
+            _id: Number(row[0]),
+            question_id: Number(row[1]),
+            body: row[2],
+            date_written: row[3],
+            answerer_name: row[4],
+            answerer_email: row[5],
+            reported: Number(row[6]),
+            helpful: Number(row[7]),
+            photos: []
         };
         // other manipulation
 
