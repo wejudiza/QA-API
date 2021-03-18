@@ -32,7 +32,7 @@ mongoose.connection.on("open",function(err,conn) {
         // other manipulation
 
         //*** bulk.find to find the array and then bulk.update $push
-        bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {photos: obj}})
+        bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
 
         counter++;
 

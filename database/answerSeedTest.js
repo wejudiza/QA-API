@@ -1,7 +1,7 @@
 let {Question, Answer} = require('./index.js')
 // Does readstream for you and allow you to pause
 let LineByLineReader = require('line-by-line');
-// let LineByLineReader = require('line-input-stream');
+// let LineInputStream = require('line-input-stream');
 var fs = require("fs");
 var mongoose = require("mongoose");
 var path = require('path');
@@ -9,13 +9,13 @@ var Schema = mongoose.Schema;
 const {exec} = require('child_process');
 
 // allows us to read the questions.csv file
-let stream = new LineByLineReader(path.join(__dirname, '../data/answers.csv'));
-// const stream = LineInputStream(fs.createReadStream(path.join(__dirname, './data/answers.csv')));
+let stream = new LineByLineReader(path.join(__dirname, '../data/answers1.csv'));
+// const stream = LineInputStream(fs.createReadStream(path.join(__dirname, '../data/answers.csv')));
 // stream.setDelimiter("\n");
 
 mongoose.connection.on("open",function(err,conn) {
     console.time('seed')
-
+    console.log('starting');
     // lower level method, needs connection
     // allows to queue up large operations - if you don't queue up you will run out of memory
     var bulk = Question.collection.initializeOrderedBulkOp();
@@ -27,8 +27,9 @@ mongoose.connection.on("open",function(err,conn) {
 
     stream.on("line",function(line) {
         var row = line.split(",");     // split the lines on delimiter
-        var obj = new Answers ({
-          id: Number(row[0]),
+        console.log('row', row);
+        var obj = {
+          _id: Number(row[0]),
           question_id: Number(row[1]),
           body: row[2],
           date_written: row[3],
@@ -37,11 +38,10 @@ mongoose.connection.on("open",function(err,conn) {
           reported: Number(row[6]),
           helpful: Number(row[7]),
           photos: []
-        });
+        };
         // other manipulation
 
-        //*** bulk.find to find the array and then bulk.update $push
-        bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
+        bulk.find({ _id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
 
         counter++;
         if (counter % 100000 === 0) {
@@ -61,6 +61,7 @@ mongoose.connection.on("open",function(err,conn) {
     });
 
     stream.on("end",function() {
+        console.log('reached end');
         if ( counter % 1000 != 0 ) {
             bulk.execute(function(err,result) {
                 if (err) throw err;   // or something

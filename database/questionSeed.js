@@ -17,7 +17,7 @@ mongoose.connection.on("open",function(err,conn) {
     // Deletes database every time before re-importing
     Question.deleteMany({})
       .then((res)=> {
-        exec('mongoimport --db qa --collection questions --type csv --file ../data/questions.csv --headerline --numInsertionWorkers 1000', (err) => {
+        exec('mongoimport --db qa --collection questions --type csv --file ../data/questions.csv --headerline --numInsertionWorkers 4', (err) => {
           if (err) console.log(err);
           console.log('done');
           mongoose.connection.close();

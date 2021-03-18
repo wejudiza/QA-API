@@ -10,7 +10,8 @@ db.once('open', function() {
 });
 
 const questionsSchema = new Schema({
-  id: {type: Number, index: {unique: true}},
+  // id: {type: Number, index: {unique: true}},
+  _id: Number,
   product_id: Number,
   body: String,
   date_written: String,
@@ -22,7 +23,8 @@ const questionsSchema = new Schema({
 
 
 const answersSchema = new Schema({
-  id: {type: Number, index: {unique: true}},
+  // id: {type: Number, index: {unique: true}},
+  _id: Number,
   question_id: Number,
   body: String,
   date_written: String,
@@ -33,7 +35,7 @@ const answersSchema = new Schema({
 });
 
 const photosSchema = new Schema({
-  id: Number,
+  _id: Number,
   answer_id: Number,
   url: String
 })
@@ -44,8 +46,7 @@ const photosSchema = new Schema({
 //   answers: [],
 // })
 
-const Question = mongoose.model('test', questionsSchema);
-// const Question = mongoose.model('Question', questionsSchema);
+const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
 
