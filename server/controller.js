@@ -1,21 +1,23 @@
-const getQnA = require('../database/dbQueries.js');
+const dbQueries = require('../database/dbQueries.js');
 
 const controller = {
 /****************QnA methods ***************************/
 
   //retrieve questions from productId
   getQnA: (req, res) => {
-    getQnA.getQnA(req, (err, data) => {
+    dbQueries.getQnA(req, (err, data) => {
       // data = data.toJSON()
-      console.log('data in getQnA', data)
+      console.log('getQnA data', data)
+      let formattedData = {
+        product_id: data[0].product_id,
+        results: data
+      }
+      // console.log('data in getQnA', data)
       if (err) {
         res.status(400).send(err);
       } else {
         // res.status(200).send(data);
-        res.status(200).send({
-          product_id: data[0].product_id,
-          results: data
-        });
+        res.status(200).send(formattedData);
       }
     });
   },
@@ -23,7 +25,7 @@ const controller = {
   //post new question
   postQuestion: (req, res) => {
     console.log(req.body)
-    getQnA.postQuestion(req, (err, data) => {
+    dbQueries.postQuestion(req, (err, data) => {
       if (err) {
         res.status(400).send(err);
       } else {
@@ -33,7 +35,7 @@ const controller = {
   },
   //post new answer
   postAnswer: (req, res) => {
-    getQnA.postAnswer(req, (err, data) => {
+    dbQueries.postAnswer(req, (err, data) => {
       console.log(req.body)
       if (err) {
         res.status(400).send(err);
@@ -44,17 +46,27 @@ const controller = {
   },
   //get new Answer
   getAnswers: (req, res) => {
-    getQnA.getAnswers(req, (err, data) => {
+    dbQueries.getAnswers(req, (err, data) => {
+      // console.log('object.keys', Object.keys(data[0]))
+      console.log('data', data)
+      data = data[0].toJSON()
+      // data = JSON.parse(JSON.stringify(data[0]));
+      let formattedData = {
+        question: data.question_id,
+        page: 0,
+        count: 5,
+        results: data.answers
+      }
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send(data);
+        res.status(200).send(formattedData);
       }
     });
   },
 
   reportAnswer: (req, res) => {
-    getQnA.reportAnswer(req, (err, data) => {
+    dbQueries.reportAnswer(req, (err, data) => {
       console.log(req.body)
       if (err) {
         res.status(400).send(err);
@@ -65,8 +77,9 @@ const controller = {
   },
 
   reportQuestion: (req, res) => {
-    getQnA.reportQuestion(req, (err, data) => {
-      console.log(req.body)
+    dbQueries.reportQuestion(req, (err, data) => {
+      // console.log(req.body)
+      console.log('data', data)
       if (err) {
         res.status(400).send(err);
       } else {
@@ -76,7 +89,7 @@ const controller = {
   },
 
   voteHelpful: (req, res) => {
-    getQnA.voteHelpful(req, (err, data) => {
+    dbQueries.voteHelpful(req, (err, data) => {
       console.log(req.body)
       if (err) {
         res.status(400).send(err);
@@ -87,12 +100,13 @@ const controller = {
   },
 
   voteQuestionHelpful: (req, res) => {
-    getQnA.voteQuestionHelpful(req, (err, data) => {
-      console.log(req.body)
+    dbQueries.voteQuestionHelpful(req, (err, data) => {
+      // console.log('voteQuestionHelpful Data', data)
+      // data = data.toJSON();
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(204).send('NO CONTENT');
+        res.status(200).send(data);
       }
     });
   }
