@@ -41,28 +41,13 @@ const photosSchema = new Schema({
 })
 
 
-// const array = new Schema({
-//   questions:[],
-//   answers: [],
-// })
-
 const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
-
-// Question.createCollection();
-// Answer.createCollection();
-// Photo.createCollection();
-
-// Photo.create({
-//   id: 123,
-//   answer_id: 456,
-//   url: 'url'
-// })
 
 module.exports = {
   Question,
   Answer,
   Photo
 }
-// module.exports = questionsSchema;
+
