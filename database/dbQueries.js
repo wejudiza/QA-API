@@ -1,10 +1,29 @@
 // const axios = require('axios');
 // const config = require('../config.js');
-const db = require('')
+const {db, Question} = require('./index.js')
+// console.log('db', db);
 
 const getQnA = {
-
   getQnA : (req, callback) => {
+    // console.log('req.params.product_id', req.params.product_id)
+    Question.find({product_id: req.params.product_id}, (err, data) => {
+        if (err) console.log(err);
+        console.log('data', data);
+        callback(null, data);
+    })
+    // Question.find({product_id: req.params.product_id}, (err, data) => {
+    //   if (err) callback(err);
+    //   console.log('data', data);
+    //   callback(null, data);
+    // })
+
+    // console.log('db.collection', db.collection('questions').find())
+    // db.questions.find({
+    //   product_id: req.params.product_id
+    // })
+    // db.collection('questions').find();
+
+
 
 
     // {
@@ -29,31 +48,31 @@ const getQnA = {
     //         }
     //   }]
     // }
-  };
+  },
 
   postQuestion : (req, callback) => {
 
-  }
+  },
 
   postAnswer : (req, callback) => {
 
-  }
+  },
 
   getAnswers : (req, callback) => {
 
-  }
+  },
 
   reportAnswer : (req, callback) => {
 
-  }
+  },
 
   reportQuestion : (req, callback) => {
 
-  }
+  },
 
   voteHelpful : (req, callback) => {
 
-  }
+  },
 
   voteQuestionHelpful : (req, callback) => {
 

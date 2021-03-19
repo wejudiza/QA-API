@@ -48,6 +48,7 @@ const Photo = mongoose.model('Photo', photosSchema);
 module.exports = {
   Question,
   Answer,
-  Photo
+  Photo,
+  db
 }
 

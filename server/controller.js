@@ -6,10 +6,16 @@ const controller = {
   //retrieve questions from productId
   getQnA: (req, res) => {
     getQnA.getQnA(req, (err, data) => {
+      // data = data.toJSON()
+      console.log('data in getQnA', data)
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send(data);
+        // res.status(200).send(data);
+        res.status(200).send({
+          product_id: data[0].product_id,
+          results: data
+        });
       }
     });
   },
@@ -46,6 +52,7 @@ const controller = {
       }
     });
   },
+
   reportAnswer: (req, res) => {
     getQnA.reportAnswer(req, (err, data) => {
       console.log(req.body)
@@ -56,6 +63,7 @@ const controller = {
       }
     });
   },
+
   reportQuestion: (req, res) => {
     getQnA.reportQuestion(req, (err, data) => {
       console.log(req.body)
@@ -66,6 +74,7 @@ const controller = {
       }
     });
   },
+
   voteHelpful: (req, res) => {
     getQnA.voteHelpful(req, (err, data) => {
       console.log(req.body)
@@ -76,6 +85,7 @@ const controller = {
       }
     });
   },
+
   voteQuestionHelpful: (req, res) => {
     getQnA.voteQuestionHelpful(req, (err, data) => {
       console.log(req.body)
@@ -85,7 +95,7 @@ const controller = {
         res.status(204).send('NO CONTENT');
       }
     });
-  },
+  }
 }
 
 module.exports = controller
