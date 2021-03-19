@@ -1,0 +1,33 @@
+{
+  "name": "qa-api",
+  "version": "1.0.0",
+  "description": "back-end for Q&A &amp; Comparison for Project-Atelier",
+  "main": "./server/index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "startDB": "nodemon database/index.js",
+    "build": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wejudiza/QA-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wejudiza/QA-API/issues"
+  },
+  "homepage": "https://github.com/wejudiza/QA-API#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "byline": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fast-csv": "^4.3.6",
+    "line-by-line": "^0.1.6",
+    "line-input-stream": "^1.0.1",
+    "mongoose": "^5.12.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}

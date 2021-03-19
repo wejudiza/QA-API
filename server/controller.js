@@ -1,10 +1,10 @@
-const getProd = require('./dbQueries.js');
+const getQnA = require('../database/dbQueries.js');
 
 const controller = {
 /****************QnA methods ***************************/
 
-   //retrieve questions from productId
-   getQnA: (req, res) => {
+  //retrieve questions from productId
+  getQnA: (req, res) => {
     getQnA.getQnA(req, (err, data) => {
       if (err) {
         res.status(400).send(err);
@@ -87,3 +87,5 @@ const controller = {
     });
   },
 }
+
+module.exports = controller
