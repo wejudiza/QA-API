@@ -75,21 +75,18 @@ const dbQueries = {
   voteHelpful : (req, callback) => {
     console.log('entering voteHelpful')
     console.log('req.params.answer_id', req.params.answer_id)
-    // Question
-    //   .findOneAndUpdate(
-    //     { answers: { $elemMatch: Number(req.params.answer_id) }},
-    //     { $inc: {"answers.$.helpfulness": 1}}
-    //   )
-    //   .exec(callback);
+    Question
+      .findOneAndUpdate(
+        { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},
+        { $inc: {"answers.$.helpfulness": 1}}
+      )
+      .exec(callback);
   },
 
   voteQuestionHelpful : (req, callback) => {
     console.log('entering voteQuestionHelpful')
     console.log('req.params.question_id', req.params.question_id)
     Question
-      // .find({question_id: Number(req.params.question_id)})
-      // .updateOne({$inc: {question_helpfulness: 1}})
-      // .findOneAndUpdate({question_id: Number(req.params.question_id)}, {$inc:{question_helpfulness: 1}})
       .findOneAndUpdate({question_id: Number(req.params.question_id)}, {$inc:{question_helpfulness: 1}}, {new: true}, (err, data) => {
         if (err) {
           callback(err)
