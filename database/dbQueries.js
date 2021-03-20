@@ -1,52 +1,131 @@
-// const axios = require('axios');
-// const config = require('../config.js');
-const {db, Question} = require('./index.js')
-// console.log('db', db);
+const {db, Question, Answer, Photo} = require('./index.js')
+
+// Formats date to YYYY-MM-DD
+function formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2)
+      month = '0' + month;
+  if (day.length < 2)
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
+// Generated random number for question_id
+// const getNumber = (callback) => {
+//   var n = Math.floor(Math.random()*1000000000);
+//   Question.findOne({'question_id': n}, function(err, result){
+//       if (err) callback(err);
+//       else if (result) return getNumber(callback);
+//       else callback(null, n);
+//   });
+// }
+
+// const test = getNumber(function(error, number){
+//   console.log(number);
+// });
+
 
 const dbQueries = {
   getQnA : (req, callback) => {
-    // console.log('req.params.product_id', req.params.product_id)
-    // Question.find({product_id: req.params.product_id, reported: 0}, (err, data) => {
-    //     if (err) callback(err);
-    //     console.log('data', data);
-    //     callback(null, data);
-    // })
     Question
-      .find({product_id: req.params.product_id, reported: 0})
+      .find({product_id: req.params.product_id/*, reported: 0*/})
       .exec(callback);
   },
 
   postQuestion : (req, callback) => {
+    // let newQuestion = new Question({
+    //   question_id: Math.floor(Math.random()*1000000000),
+    //   product_id: req.body.product_id,
+    //   body: req.body.body,
+    //   question_date: formatDate(new Date()),
+    //   asker_name: req.body.name,
+    //   asker_email: req.body.email,
+    //   reported: 0,
+    //   question_helpfulness: 0,
+    //   answers: []
+    // })
+
+    // console.log('newQuestion', newQuestion);
+
+    // newQuestion.save((err, data) => {
+    //   // console.log('entering newQuestion.save')
+    //   console.log('data', data)
+    //   if (err) callback (err)
+    //   callback(null, data)
+    // })
     Question
       .create({
+        question_id: Math.floor(Math.random()*1000000000),
+        product_id: req.body.product_id,
         body: req.body.body,
-        name: req.body.name,
-        email: req.body.email,
-        product_id: req.body.product_id
+        question_date: formatDate(new Date()),
+        asker_name: req.body.name,
+        asker_email: req.body.email,
+        reported: 0,
+        question_helpfulness: 0,
+        answers: []
+      }, (err, data) => {
+        if (err) callback(err)
+        callback(null, data)
       })
-      .exec(callback)
   },
 
   postAnswer : (req, callback) => {
-    Question
-      .create({
-        body: req.body.body,
-        name: req.body.name,
-        email: req.body.email,
-        photos: req.body.photos
+    console.log('req.params.question_id', req.params.question_id);
+    var newAnswer_id = Math.floor(Math.random()*1000000000)
+    var photosArr = []
+    for (var i = 0; i < req.body.photos.length; i++) {
+      let newPhoto = new Photo({
+        _id: Math.floor(Math.random()*1000000000),
+        answer_id: newAnswer_id,
+        url: req.body.photos[i]
       })
-      .exec(callback)
+      photosArr.push(newPhoto);
+    }
+
+
+    let newAnswer = new Answer({
+      answer_id: newAnswer_id,
+      question_id: req.params.question_id,
+      body: req.body.body,
+      date_written: formatDate(new Date()),
+      answerer_name: req.body.name,
+      answerer_email: req.body.email,
+      reported: 0,
+      helpful: 0,
+      photos: photosArr
+    })
+
+    console.log('newAnswer', newAnswer);
+
+    Question
+      .update(
+        {question_id: Number(req.params.question_id)},
+        {$push: {answers: newAnswer}},
+        (err, data) => {
+          if (err) callback(err)
+          callback(null, data)
+        }
+      )
+
+    // Question
+    // .find(
+    //   {question_id: 1},
+    // )
+    // .then((results) => {
+    //   var jsonObj = results[0].toJSON()
+    //   console.log('jsonObj.answers', jsonObj.answers) //> actually gives me my answers array
+    // })
   },
 
   getAnswers : (req, callback) => {
-    // console.log('req.params.question_id', typeof(req.params.question_id));
-    // Question.find({question_id: Number(req.params.question_id)/*, reported: 0*/}, (err, data) => {
-    //   if (err) callback(err);
-    //   callback(null, data);
-    //  })
-    // console.log(Number(req.params.question_id))
     Question
-      .find({question_id: Number(req.params.question_id), reported: 0})
+      .find({question_id: Number(req.params.question_id)/*, reported: 0}*/})
       .exec(callback);
   },
 
@@ -56,11 +135,15 @@ const dbQueries = {
     Question
       .findOneAndUpdate(
         { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},
-        { $set: {"answers.$.reported": 1}}
+        { $set: {"answers.$.reported": 1}},
+        {new: true},
+        (err, data) => {
+          if (err) callback(err)
+          else callback(null, data)
+        }
       )
       .exec(callback);
   },
-
 
   voteHelpful : (req, callback) => {
     console.log('entering voteHelpful')
@@ -102,11 +185,13 @@ const dbQueries = {
     //       .exec(callback);
     //       })
     Question
-      .updateOne(
-        { answers: {$elemMatch: {answer_id: 5}}},
-        { $set: {helpfulness: 1}},
-      )
-      .exec(callback);
+      .findOneAndUpdate(
+        { answers: {$elemMatch: {answer_id: Number(req.params.answer_id)}}},
+        {$inc: {"answers.$.helpfulness": 1}},
+        (err, data) => {
+          if (err) callback(err)
+          else callback(null, data)
+      })
   },
 
   reportQuestion : (req, callback) => {
@@ -131,7 +216,6 @@ const dbQueries = {
           callback(null, data)
         }
       })
-      // .exec(callback);
   }
 }
 

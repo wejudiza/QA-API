@@ -46,7 +46,7 @@ mongoose.connection.on("open",function(err,conn) {
 
         // var row = line.split(",");     // split the lines on delimiter
         var row = line.toString('utf-8').split(",")
-        var obj = {
+        var obj = new Question ({
           question_id: Number(row[0]),
           product_id: Number(row[1]),
           question_body: row[2],
@@ -55,8 +55,8 @@ mongoose.connection.on("open",function(err,conn) {
           asker_email: row[5],
           reported: Number(row[6]),
           question_helpfulness: Number(row[7]),
-        //   answers: []
-        };
+          answers: []
+        });
         // other manipulation
 
         //*** bulk.find to find the array and then bulk.update $push
