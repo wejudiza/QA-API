@@ -61,6 +61,54 @@ const dbQueries = {
       .exec(callback);
   },
 
+
+  voteHelpful : (req, callback) => {
+    console.log('entering voteHelpful')
+    console.log('req.params.answer_id', req.params.answer_id)
+    // Question
+    //   .findOneAndUpdate(
+    //     { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},
+    //     { $inc: {"answers.$.helpfulness": 1}}
+    //   )
+    //   .exec(callback);
+    // Question
+    //   .find({
+    //     answers: {$elemMatch: {answer_id: 5}}
+    //   })
+    //   .then((results) => {
+    //     let obj = results[0]
+    //     // Find appropriate answer
+    //     obj = obj.toJSON();
+    //     console.log('obj.answers', obj.answers)
+    //     obj.answers.forEach((answer => {
+    //       if (answer.answer_id === 5) {
+    //         answer.helpfulness += 1
+    //       }
+    //     }))
+    //     // console.log(obj.answers)
+    //     console.log(obj._id)
+    //     // Question.updateOne({
+    //     //   question_id: obj.question_id
+    //     // }, obj, (err, result) => {
+    //     //   console.log('err', err);
+    //     //   console.log('result', result);
+    //     // })
+    //     delete obj._id
+    //     Question
+    //       .findOneAndUpdate(
+    //         { answers: { $elemMatch: {answer_id: 5} }},
+    //         { $set: {answers: obj.answers}}
+    //       )
+    //       .exec(callback);
+    //       })
+    Question
+      .updateOne(
+        { answers: {$elemMatch: {answer_id: 5}}},
+        { $set: {helpfulness: 1}},
+      )
+      .exec(callback);
+  },
+
   reportQuestion : (req, callback) => {
     console.log('entering reportQuestion')
     console.log('req.params.question_id', req.params.question_id)
@@ -69,17 +117,6 @@ const dbQueries = {
       .find({question_id: Number(req.params.question_id)})
       .updateOne({reported: 1})
       // .updateOne({question_id: req.params.question_id, reported: 1})
-      .exec(callback);
-  },
-
-  voteHelpful : (req, callback) => {
-    console.log('entering voteHelpful')
-    console.log('req.params.answer_id', req.params.answer_id)
-    Question
-      .findOneAndUpdate(
-        { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},
-        { $inc: {"answers.$.helpfulness": 1}}
-      )
       .exec(callback);
   },
 
