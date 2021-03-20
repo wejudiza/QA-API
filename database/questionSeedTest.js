@@ -49,13 +49,13 @@ mongoose.connection.on("open",function(err,conn) {
         var obj = {
           question_id: Number(row[0]),
           product_id: Number(row[1]),
-          question_body: (row[2]),
-          question_date: (row[3]),
-          asker_name: (row[4]),
-          asker_email: (row[5]),
+          question_body: row[2],
+          question_date: row[3],
+          asker_name: row[4],
+          asker_email: row[5],
           reported: Number(row[6]),
           question_helpfulness: Number(row[7]),
-          answers: []
+        //   answers: []
         };
         // other manipulation
 

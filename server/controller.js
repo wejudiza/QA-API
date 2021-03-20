@@ -48,7 +48,7 @@ const controller = {
   getAnswers: (req, res) => {
     dbQueries.getAnswers(req, (err, data) => {
       // console.log('object.keys', Object.keys(data[0]))
-      console.log('data', data)
+      // console.log('data', data)
       data = data[0].toJSON()
       // data = JSON.parse(JSON.stringify(data[0]));
       let formattedData = {
@@ -71,7 +71,7 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(204).send('NO CONTENT');
+        res.status(200).send('NO CONTENT');
       }
     });
   },
@@ -83,7 +83,7 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(204).send('NO CONTENT');
+        res.status(200).send('NO CONTENT');
       }
     });
   },
@@ -94,7 +94,7 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(204).send('NO CONTENT');
+        res.status(200).send('NO CONTENT');
       }
     });
   },
@@ -106,7 +106,7 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send(data);
+        res.status(200).send('NO CONTENT');
       }
     });
   }

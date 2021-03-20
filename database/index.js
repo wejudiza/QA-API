@@ -11,23 +11,23 @@ db.once('open', function() {
 
 const questionsSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  _id: Number,
+  question_id: Number,
   product_id: Number,
   body: String,
-  date_written: String,
+  question_date: Date,
   asker_name: String,
   asker_email: String,
   reported: Number,
-  helpful: Number,
+  question_helpfulness: Number
 });
 
 
 const answersSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  _id: Number,
+  answer_id: Number,
   question_id: Number,
   body: String,
-  date_written: String,
+  date_written: Date,
   answerer_name: String,
   answerer_email: String,
   reported: Number,

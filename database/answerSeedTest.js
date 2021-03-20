@@ -41,7 +41,6 @@ mongoose.connection.on("open",function(err,conn) {
             answerer_email: row[5],
             reported: Number(row[6]),
             helpfulness: Number(row[7]),
-            photos: []
         };
         // other manipulation
 

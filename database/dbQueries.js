@@ -51,14 +51,14 @@ const dbQueries = {
   },
 
   reportAnswer : (req, callback) => {
-    // console.log('entering reportAnswer')
-    // console.log('req.params.question_id', req.params.question_id)
-    // Question
-    //   // .findOneAndUpdate({question_id: req.params.question_id, reported: 1/*, reported: 0*/})
-    //   .find({question_id: Number(req.params.question_id)})
-    //   .updateOne({reported: 1})
-    //   // .updateOne({question_id: req.params.question_id, reported: 1})
-    //   .exec(callback);
+    console.log('entering reportAnswer')
+    console.log('req.params.answer_id', req.params.answer_id)
+    Question
+      .findOneAndUpdate(
+        { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},
+        { $set: {"answers.$.reported": 1}}
+      )
+      .exec(callback);
   },
 
   reportQuestion : (req, callback) => {
@@ -73,7 +73,14 @@ const dbQueries = {
   },
 
   voteHelpful : (req, callback) => {
-
+    console.log('entering voteHelpful')
+    console.log('req.params.answer_id', req.params.answer_id)
+    // Question
+    //   .findOneAndUpdate(
+    //     { answers: { $elemMatch: Number(req.params.answer_id) }},
+    //     { $inc: {"answers.$.helpfulness": 1}}
+    //   )
+    //   .exec(callback);
   },
 
   voteQuestionHelpful : (req, callback) => {
