@@ -33,19 +33,19 @@ mongoose.connection.on("open",function(err,conn) {
         // var row = line.split(",");     // split the lines on delimiter
         var row = line.toString('utf-8').split(",")
         var obj = {
-            _id: Number(row[0]),
+            answer_id: Number(row[0]),
             question_id: Number(row[1]),
             body: row[2],
-            date_written: row[3],
+            date: row[3],
             answerer_name: row[4],
             answerer_email: row[5],
             reported: Number(row[6]),
-            helpful: Number(row[7]),
-            photos: []
+            helpfulness: Number(row[7]),
+            // photos: []
         };
         // other manipulation
 
-        bulk.find({ _id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
+        bulk.find({ question_id: Number(row[1]) }).upsert().update( {$push: {answers: obj}})
 
         counter++;
         if (counter % 100000 === 0) {

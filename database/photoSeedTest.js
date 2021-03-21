@@ -30,7 +30,7 @@ mongoose.connection.on("open",function(err,conn) {
         // var row = line.split(",");     // split the lines on delimiter
         var row = line.toString('utf-8').split(",")
         var obj = {
-          _id: Number(row[0]),
+          id: Number(row[0]),
           answer_id: Number(row[1]),
           url: row[2]
         };
@@ -39,7 +39,7 @@ mongoose.connection.on("open",function(err,conn) {
         //*** bulk.find to find the array and then bulk.update $push
         // bulk.find({ id: Number(row[1]) }).upsert().update( {$push: {photos: obj}})
         // Looks inside each answer, find answer_id
-        bulk.find({ answers: { $elemMatch: { _id: Number(row[1]) } } }).updateOne({ $addToSet: { "answers.$.photos": obj } })
+        bulk.find({ answers: { $elemMatch: { answer_id: Number(row[1]) } } }).updateOne({ $addToSet: { "answers.$.photos": obj } })
 
         counter++;
         if (counter % 100000 === 0) {

@@ -1,8 +1,7 @@
-// const router = require('express').Router();
-// const controller = require('./controller');
+const router = require('express').Router();
+const controller = require('./controller');
 
 // /// ///////Questions and Answers///////////
-
 router
   .route('/qa/questions/:product_id')
   .get(controller.getQnA)

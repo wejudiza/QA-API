@@ -47,15 +47,15 @@ mongoose.connection.on("open",function(err,conn) {
         // var row = line.split(",");     // split the lines on delimiter
         var row = line.toString('utf-8').split(",")
         var obj = {
-          _id: Number(row[0]),
+          question_id: Number(row[0]),
           product_id: Number(row[1]),
-          body: (row[2]),
-          date_written: (row[3]),
-          asker_name: (row[4]),
-          asker_email: (row[5]),
+          question_body: row[2],
+          question_date: row[3],
+          asker_name: row[4],
+          asker_email: row[5],
           reported: Number(row[6]),
-          helpful: Number(row[7]),
-          answers: []
+          question_helpfulness: Number(row[7]),
+        //   answers: []
         };
         // other manipulation
 

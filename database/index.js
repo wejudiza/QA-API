@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost:27017/qatest', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // TEST database running on localhost
 const db = mongoose.connection;
@@ -11,27 +11,29 @@ db.once('open', function() {
 
 const questionsSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  _id: Number,
+  question_id: Number,
   product_id: Number,
   body: String,
-  date_written: String,
+  question_date: String,
   asker_name: String,
   asker_email: String,
   reported: Number,
-  helpful: Number,
+  question_helpfulness: Number,
+  answers: []
 });
 
 
 const answersSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  _id: Number,
+  answer_id: Number,
   question_id: Number,
   body: String,
   date_written: String,
   answerer_name: String,
   answerer_email: String,
   reported: Number,
-  helpful: Number
+  helpful: Number,
+  photos: []
 });
 
 const photosSchema = new Schema({
@@ -41,28 +43,14 @@ const photosSchema = new Schema({
 })
 
 
-// const array = new Schema({
-//   questions:[],
-//   answers: [],
-// })
-
 const Question = mongoose.model('Question', questionsSchema);
 const Answer = mongoose.model('Answer', answersSchema);
 const Photo = mongoose.model('Photo', photosSchema);
 
-// Question.createCollection();
-// Answer.createCollection();
-// Photo.createCollection();
-
-// Photo.create({
-//   id: 123,
-//   answer_id: 456,
-//   url: 'url'
-// })
-
 module.exports = {
   Question,
   Answer,
-  Photo
+  Photo,
+  db
 }
-// module.exports = questionsSchema;
+
