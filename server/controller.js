@@ -6,10 +6,11 @@ const controller = {
   //retrieve questions from productId
   getQnA: (req, res) => {
     dbQueries.getQnA(req, (err, data) => {
-      // data = data.toJSON()
+      console.log('getQnA data', data)
+      data = data[0].toJSON()
       console.log('getQnA data', data)
       let formattedData = {
-        product_id: data[0].product_id,
+        product_id: data.product_id,
         results: data
       }
       // console.log('data in getQnA', data)
@@ -26,6 +27,7 @@ const controller = {
   postQuestion: (req, res) => {
     console.log(req.body)
     dbQueries.postQuestion(req, (err, data) => {
+      // console.log('controller data', data)
       if (err) {
         res.status(400).send(err);
       } else {
@@ -36,7 +38,8 @@ const controller = {
   //post new answer
   postAnswer: (req, res) => {
     dbQueries.postAnswer(req, (err, data) => {
-      console.log(req.body)
+      // console.log(req.body)
+      console.log('data postAnswer', data);
       if (err) {
         res.status(400).send(err);
       } else {
@@ -71,7 +74,9 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send('NO CONTENT');
+        // res.status(200).send('NO CONTENT');
+        res.status(200);
+        res.json('Reported Answer');
       }
     });
   },
@@ -83,7 +88,9 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send('NO CONTENT');
+        // res.status(200).send('NO CONTENT');
+        res.status(200);
+        res.json('Reported Question');
       }
     });
   },
@@ -94,7 +101,9 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send('NO CONTENT');
+        // res.status(200).send('NO CONTENT');
+        res.status(200)
+        res.json('Upvoted Answer');
       }
     });
   },
@@ -106,7 +115,9 @@ const controller = {
       if (err) {
         res.status(400).send(err);
       } else {
-        res.status(200).send('NO CONTENT');
+        // res.status(200).send('NO CONTENT');
+        res.status(200)
+        res.json('Upvoted Question');
       }
     });
   }
