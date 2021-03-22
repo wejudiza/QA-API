@@ -5,3 +5,6 @@ node_modules
 
 #config
 ./server/config.js
+*config.js
+newrelic.js
+newrelic_agent.log

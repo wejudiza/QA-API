@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const router = require('./router.js');
+const newrelic = require('newrelic');
 
 const port = 8080;
 

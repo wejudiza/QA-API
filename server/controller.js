@@ -3,12 +3,11 @@ const dbQueries = require('../database/dbQueries.js');
 const controller = {
 /****************QnA methods ***************************/
 
-  //retrieve questions from productId
+  //get questions from productId
   getQnA: (req, res) => {
     dbQueries.getQnA(req, (err, data) => {
-      console.log('getQnA data', data)
-      data = data[0].toJSON()
-      console.log('getQnA data', data)
+      // console.log('getQnA data', data)
+      // *** No need to data.toJSON() in getQnA for some reason
       let formattedData = {
         product_id: data.product_id,
         results: data
@@ -23,31 +22,7 @@ const controller = {
     });
   },
 
-  //post new question
-  postQuestion: (req, res) => {
-    console.log(req.body)
-    dbQueries.postQuestion(req, (err, data) => {
-      // console.log('controller data', data)
-      if (err) {
-        res.status(400).send(err);
-      } else {
-        res.status(200).send(data);
-      }
-    })
-  },
-  //post new answer
-  postAnswer: (req, res) => {
-    dbQueries.postAnswer(req, (err, data) => {
-      // console.log(req.body)
-      console.log('data postAnswer', data);
-      if (err) {
-        res.status(400).send(err);
-      } else {
-        res.status(200).send(data);
-      }
-    })
-  },
-  //get new Answer
+  //get new Answer by question_id
   getAnswers: (req, res) => {
     dbQueries.getAnswers(req, (err, data) => {
       // console.log('object.keys', Object.keys(data[0]))
@@ -68,9 +43,35 @@ const controller = {
     });
   },
 
+  //post new question
+  postQuestion: (req, res) => {
+    // console.log(req.body)
+    dbQueries.postQuestion(req, (err, data) => {
+      // console.log('controller data', data)
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(data);
+      }
+    })
+  },
+
+  //post new answer
+  postAnswer: (req, res) => {
+    dbQueries.postAnswer(req, (err, data) => {
+      // console.log(req.body)
+      console.log('data postAnswer', data);
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(data);
+      }
+    })
+  },
+
   reportAnswer: (req, res) => {
     dbQueries.reportAnswer(req, (err, data) => {
-      console.log(req.body)
+      // console.log(req.body)
       if (err) {
         res.status(400).send(err);
       } else {
@@ -84,7 +85,7 @@ const controller = {
   reportQuestion: (req, res) => {
     dbQueries.reportQuestion(req, (err, data) => {
       // console.log(req.body)
-      console.log('data', data)
+      // console.log('data', data)
       if (err) {
         res.status(400).send(err);
       } else {
@@ -97,7 +98,7 @@ const controller = {
 
   voteHelpful: (req, res) => {
     dbQueries.voteHelpful(req, (err, data) => {
-      console.log(req.body)
+      // console.log(req.body)
       if (err) {
         res.status(400).send(err);
       } else {
@@ -122,6 +123,7 @@ const controller = {
     });
   },
 
+  // Test Docker service
   test: (req, res) => {
     // console.log('Docker server service is working')
     res.status(200).send('Docker server service is working')
