@@ -28,4 +28,8 @@ router
   .route('/qa/questions/:question_id/report')
   .put(controller.reportQuestion)
 
+router
+  .route('/qa/test')
+  .get(controller.test)
+
 module.exports = router;

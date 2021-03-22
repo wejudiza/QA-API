@@ -120,7 +120,13 @@ const controller = {
         res.json('Upvoted Question');
       }
     });
+  },
+
+  test: (req, res) => {
+    // console.log('Docker server service is working')
+    res.status(200).send('Docker server service is working')
   }
+
 }
 
 module.exports = controller
