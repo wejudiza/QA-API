@@ -49,13 +49,17 @@ const dbQueries = {
   postAnswer : (req, callback) => {
     var newAnswer_id = Math.floor(Math.random()*1000000000)
     var photosArr = []
-    for (var i = 0; i < req.body.photos.length; i++) {
-      let newPhoto = new Photo({
-        _id: Math.floor(Math.random()*1000000000),
-        answer_id: newAnswer_id,
-        url: req.body.photos[i]
-      })
-      photosArr.push(newPhoto);
+    // *** Since there is no photos array if the original answer does not have any photos,
+    // req,body.photos would be undefined so we need to check for it
+    if (req.body.photos) {
+      for (var i = 0; i < req.body.photos.length; i++) {
+        var newPhoto = new Photo({
+          _id: Math.floor(Math.random()*1000000000),
+          answer_id: newAnswer_id,
+          url: req.body.photos[i]
+        })
+        photosArr.push(newPhoto);
+      }
     }
 
 
@@ -71,7 +75,7 @@ const dbQueries = {
       photos: photosArr
     })
 
-    console.log('newAnswer', newAnswer);
+    // console.log('newAnswer', newAnswer);
 
     Question
       .update(
@@ -98,8 +102,6 @@ const dbQueries = {
   },
 
   voteHelpful : (req, callback) => {
-    console.log('entering voteHelpful')
-    console.log('req.params.answer_id', req.params.answer_id)
     // Question
     //   .findOneAndUpdate(
     //     { answers: { $elemMatch: {answer_id: Number(req.params.answer_id)} }},

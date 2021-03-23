@@ -28,4 +28,9 @@ router
   .route('/qa/questions/:question_id/report')
   .put(controller.reportQuestion)
 
+// To test service Docker container
+router
+  .route('/qa/test')
+  .get(controller.test)
+
 module.exports = router;

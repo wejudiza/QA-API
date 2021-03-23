@@ -1,6 +1,4 @@
 let {Question} = require('./index.js')
-// let questionsSchema = require('./index.js')
-// Does readstream for you and allow you to pause
 // let LineInputStream = require('line-input-stream');
 // let LineByLineReader = require('line-by-line');
 let byline = require('byline');
@@ -18,6 +16,24 @@ const {exec} = require('child_process')
 // let stream = new LineByLineReader(path.join(__dirname, '../data/questions1.csv'))
 var stream = fs.createReadStream('../data/questions.csv');
 stream = byline.createStream(stream);
+
+// Remove double quotes from string
+var cleanString = (str) => {
+    let result = ''
+    for (let i = 0; i < str.length; i++) {
+        // only add first and last char if it's an alphabet character
+        if (i === 0 || i === str.length - 1) {
+            // https://coderrocketfuel.com/article/how-to-check-if-a-character-is-a-letter-using-javascript
+            if ((/[a-zA-Z]/).test(str[i])) {
+                result += str[i]
+            }
+        } else {
+            // other than that use the whole string
+            result += str[i]
+        }
+    }
+    return result
+}
 
 mongoose.connection.on("open",function(err,conn) {
     console.time('seed');
@@ -49,13 +65,13 @@ mongoose.connection.on("open",function(err,conn) {
         var obj = {
           question_id: Number(row[0]),
           product_id: Number(row[1]),
-          question_body: row[2],
-          question_date: row[3],
-          asker_name: row[4],
-          asker_email: row[5],
+          question_body: cleanString(row[2]),
+          question_date: cleanString(row[3]),
+          asker_name: cleanString(row[4]),
+          asker_email: cleanString(row[5]),
           reported: Number(row[6]),
           question_helpfulness: Number(row[7]),
-        //   answers: []
+          answers: []
         };
         // other manipulation
 
