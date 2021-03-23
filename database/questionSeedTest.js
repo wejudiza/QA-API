@@ -71,7 +71,7 @@ mongoose.connection.on("open",function(err,conn) {
           asker_email: cleanString(row[5]),
           reported: Number(row[6]),
           question_helpfulness: Number(row[7]),
-        //   answers: []
+          answers: []
         };
         // other manipulation
 

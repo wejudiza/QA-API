@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost:27017/qafinal', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // Connects to the Docker container's endpoint --> use container name "mongo"
-// mongoose.connect('mongodb://mongo:27017/qafinal', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://mongo:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // TEST database running on localhost
 const db = mongoose.connection;
@@ -14,8 +14,8 @@ db.once('open', function() {
 
 const questionsSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  question_id: Number,
-  product_id: Number,
+  question_id: {type: Number, required: true, index: true},
+  product_id: {type: Number, required: true, index: true},
   body: String,
   question_date: String,
   asker_name: String,
@@ -28,8 +28,8 @@ const questionsSchema = new Schema({
 
 const answersSchema = new Schema({
   // id: {type: Number, index: {unique: true}},
-  answer_id: Number,
-  question_id: Number,
+  answer_id: {type: Number, required: true, index: true},
+  question_id: {type: Number, required: true, index: true},
   body: String,
   date_written: String,
   answerer_name: String,

@@ -7,7 +7,7 @@ FROM node:14
 
 # Telling docker to run all commands from /app WORKDIR
 # Typically you have one WORKDIR per layer
-WORKDIR /app
+WORKDIR usr/app
 
 # RUN mkdir /app
 # ADD . /app

@@ -2,50 +2,52 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export let options = {
-  // stages: [
-  //   { duration: '30s', target: 10 },
-  //   { duration: '30s', target: 50 },
-  //   { duration: '30s', target: 100 },
-  //   { duration: '30s', target: 0 },
-  // ],
-  // vus: 10,
+  stages: [
+    { duration: '1s', target: 100 },
+    { duration: '30s', target: 100 },
+    { duration: '1s', target: 0 },
+    // { duration: '30s', target: 50 },
+    // { duration: '30s', target: 100 },
+    // { duration: '30s', target: 0 },
+  ],
+  // vus: 100,
   // duration: '30s',
 };
 
 export default function () {
-  const url = 'http://localhost:8080/api/qa';
+  const url = 'http://localhost:3000/api/qa';
 
   const responses = http.batch([
-    [
-      'GET',
-      `${url}/questions/1`,
-      null
-    ],
-    [
-      'GET',
-      `${url}/questions/500000`,
-      null
-    ],
-    [
-      'GET',
-      `${url}/questions/1000000`,
-      null
-    ],
     // [
     //   'GET',
-    //   `${url}/questions/1/answers`,
+    //   `${url}/questions/1`,
     //   null
     // ],
     // [
     //   'GET',
-    //   `${url}/questions/500000/answers`,
+    //   `${url}/questions/500000`,
     //   null
     // ],
     // [
     //   'GET',
-    //   `${url}/questions/1000000/answers`,
+    //   `${url}/questions/1000000`,
     //   null
     // ],
+    [
+      'GET',
+      `${url}/questions/1/answers`,
+      null
+    ],
+    [
+      'GET',
+      `${url}/questions/500000/answers`,
+      null
+    ],
+    [
+      'GET',
+      `${url}/questions/1000000/answers`,
+      null
+    ],
     // [
     //   'POST',
     //   `${url}/questions/1`,

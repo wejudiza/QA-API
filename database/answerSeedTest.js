@@ -60,7 +60,7 @@ mongoose.connection.on("open",function(err,conn) {
             answerer_email: cleanString(row[5]),
             reported: Number(row[6]),
             helpfulness: Number(row[7]),
-            // photos: []
+            photos: []
         };
         // other manipulation
 
