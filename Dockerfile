@@ -9,6 +9,9 @@ FROM node:14
 # Typically you have one WORKDIR per layer
 WORKDIR /app
 
+# RUN mkdir /app
+# ADD . /app
+# WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
@@ -16,7 +19,7 @@ RUN npm install
 # copying every file from source to the app WORKDIR
 COPY . .
 
-ENV port = 8080
+# ENV port = 8080
 # ENV MONGO_HOST "host.docker.internal"
 
 # EXPOSE 27017

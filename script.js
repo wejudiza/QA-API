@@ -2,12 +2,12 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export let options = {
-  stages: [
-    { duration: '15s', target: 10 },
-    { duration: '15s', target: 100 },
-    { duration: '15s', target: 1000 },
-    { duration: '15s', target: 0 },
-  ],
+  // stages: [
+  //   { duration: '30s', target: 10 },
+  //   { duration: '30s', target: 50 },
+  //   { duration: '30s', target: 100 },
+  //   { duration: '30s', target: 0 },
+  // ],
   // vus: 10,
   // duration: '30s',
 };
@@ -16,21 +16,21 @@ export default function () {
   const url = 'http://localhost:8080/api/qa';
 
   const responses = http.batch([
-    // [
-    //   'GET',
-    //   `${url}/questions/1`,
-    //   null
-    // ],
-    // [
-    //   'GET',
-    //   `${url}/questions/500000`,
-    //   null
-    // ],
-    // [
-    //   'GET',
-    //   `${url}/questions/1000000`,
-    //   null
-    // ],
+    [
+      'GET',
+      `${url}/questions/1`,
+      null
+    ],
+    [
+      'GET',
+      `${url}/questions/500000`,
+      null
+    ],
+    [
+      'GET',
+      `${url}/questions/1000000`,
+      null
+    ],
     // [
     //   'GET',
     //   `${url}/questions/1/answers`,
@@ -136,7 +136,7 @@ export default function () {
   //     `${url}/answers/1000000/report`,
   //     null
   //   ],
-  // ])
+  ])
   sleep(1)
 }
 

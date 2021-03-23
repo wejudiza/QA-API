@@ -6,7 +6,7 @@ const path = require('path');
 const router = require('./router.js');
 const newrelic = require('newrelic');
 
-const port = 8080;
+const port = 3000;
 
 const server = express();
 
