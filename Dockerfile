@@ -9,9 +9,6 @@ FROM node:14
 # Typically you have one WORKDIR per layer
 WORKDIR usr/app
 
-# RUN mkdir /app
-# ADD . /app
-# WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
@@ -21,10 +18,9 @@ COPY . .
 
 # ENV port = 8080
 # ENV MONGO_HOST "host.docker.internal"
-
 # EXPOSE 27017
 
 # Expose tells Docker instance to listen for requests on Docker container's PORT on 8080
+# *** NOTE: If using docker.compose or kubernetes, we need to change EXPOSE to 3000
 EXPOSE 8080
-
 CMD ["npm", "start"]

@@ -1,6 +1,6 @@
 *.csv
 data
-
+*.sh
 
 #node-modules
 node_modules
