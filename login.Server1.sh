@@ -1,0 +1,1 @@
+ssh -i "/Users/weillytong/Documents/HackReactor/SEI/SDC/QA-API/server.pem" ubuntu@ec2-13-57-18-251.us-west-1.compute.amazonaws.com
