@@ -22,5 +22,5 @@ COPY . .
 
 # Expose tells Docker instance to listen for requests on Docker container's PORT on 8080
 # *** NOTE: If using docker.compose or kubernetes, we need to change EXPOSE to 3000
-EXPOSE 8080
+EXPOSE 3000
 CMD ["npm", "start"]

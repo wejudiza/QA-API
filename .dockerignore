@@ -1,15 +1,23 @@
 *.csv
 data
 *.sh
+oldSeedFiles
 
 #node-modules
 node_modules
+./node_modules
 
 #config
 ./server/config.js
 *config.js
+
+# K6 and New Relic
 newrelic.js
 newrelic_agent.log
+script.js
 
 #PEM
 *.pem
+
+#script.js
+script.js

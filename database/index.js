@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // mongoose.connect('mongodb://localhost:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect('mongodb://weilly:mongo@52.53.198.219:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://weilly:mongo@52.8.245.88:27017/qareseed', {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 // Connects to the Docker container's endpoint --> use container name "mongo"
