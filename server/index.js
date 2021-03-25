@@ -19,8 +19,14 @@ server.use(bodyparser.urlencoded({ extended: true }));
 
 server.use('/api', router);
 
-server.get('/loaderio-473f65f530c88214a9524281bdafa623', (req, res) => {
-  res.send('loaderio-473f65f530c88214a9524281bdafa623')
+// Loader.io verification for server 1
+// server.get('/loaderio-473f65f530c88214a9524281bdafa623', (req, res) => {
+//   res.send('loaderio-473f65f530c88214a9524281bdafa623')
+// })
+
+// Loader io verification for nginx
+server.get('/loaderio-cc9764a3d498a1a24e29aa58731a0625', (req, res) => {
+  res.send('loaderio-cc9764a3d498a1a24e29aa58731a0625')
 })
 
 server.listen(port, () => console.log(`LISTENING ON PORT ${port}`));
