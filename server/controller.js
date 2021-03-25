@@ -60,7 +60,7 @@ const controller = {
   postAnswer: (req, res) => {
     dbQueries.postAnswer(req, (err, data) => {
       // console.log(req.body)
-      console.log('data postAnswer', data);
+      // console.log('data postAnswer', data);
       if (err) {
         res.status(400).send(err);
       } else {
