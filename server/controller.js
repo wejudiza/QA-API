@@ -6,13 +6,20 @@ const controller = {
   //get questions from productId
   getQnA: (req, res) => {
     dbQueries.getQnA(req, (err, data) => {
-      // console.log('getQnA data', data)
+      console.log('getQnA data', data)
       // *** No need to data.toJSON() in getQnA for some reason
-      let formattedData = {
-        product_id: data.product_id,
-        results: data
+      // If data[0] exists, that means that product_id exists
+      if (data[0]) {
+        var formattedData = {
+          product_id: data[0].product_id,
+          results: data
+        }
+      } else {
+        var formattedData = {
+          product_id: req.params.product_id,
+          results: []
+        }
       }
-      // console.log('data in getQnA', data)
       if (err) {
         res.status(400).send(err);
       } else {
