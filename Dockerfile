@@ -3,11 +3,11 @@
 # Docker containers are just a running process
 
 # Node version 14 base image
-FROM node:14
+FROM node:14-alpine
 
 # Telling docker to run all commands from /app WORKDIR
 # Typically you have one WORKDIR per layer
-WORKDIR usr/app
+WORKDIR /usr/app
 
 COPY package*.json ./
 
