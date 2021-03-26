@@ -6,7 +6,7 @@ const controller = {
   //get questions from productId
   getQnA: (req, res) => {
     dbQueries.getQnA(req, (err, data) => {
-      console.log('getQnA data', data)
+      // console.log('getQnA data', data)
       // *** No need to data.toJSON() in getQnA for some reason
       // If data[0] exists, that means that product_id exists
       if (data[0]) {
